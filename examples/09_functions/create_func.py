@@ -1,35 +1,31 @@
-# First version - without return operator
 
+# ipython [1]
+def configure_intf(intf_name, ip, mask):
+    print('interface', intf_name)
+    print('ip address', ip, mask)
 
-def open_file(filename):
-    '''Documentation string'''
-    with open(filename) as f:
-        print(f.read())
+# ipython [10]
+def configure_intf(intf_name, ip, mask):
+    config = f'interface {intf_name}\nip address {ip} {mask}'
+    return config
 
+# ipython [14]
+def configure_intf(intf_name, ip, mask):
+    config = f'interface {intf_name}\nip address {ip} {mask}'
+    return config
+    print('Конфигурация готова')
 
-print(open_file('r1.txt'))
-print(open_file('ospf.txt'))
+# ipython [16]
+def configure_intf(intf_name, ip, mask):
+    config_intf = f'interface {intf_name}\n'
+    config_ip = f'ip address {ip} {mask}'
+    return config_intf, config_ip
 
-# Second version - with return operator
-
-
-def open_file(filename):
-    '''Documentation string'''
-    with open(filename) as f:
-        return f.read()
-
-
-result = open_file('r1.txt')
-print(result)
-
-# Third version - after return
-
-
-def open_file(filename):
-    print('Reading file', filename)
-    with open(filename) as f:
-        return f.read()
-        print('Done')
-
-
-result = open_file('r1.txt')
+# ipython [23]
+def configure_intf(intf_name, ip, mask):
+    '''
+    Функция генерирует конфигурацию интерфейса
+    '''
+    config_intf = f'interface {intf_name}\n'
+    config_ip = f'ip address {ip} {mask}'
+    return config_intf, config_ip

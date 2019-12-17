@@ -12,13 +12,16 @@
 Поэтому в соответствии каждому порту стоит список
 и первый (нулевой) элемент списка указывает как воспринимать номера VLAN,
 которые идут дальше:
-	add - значит VLANы надо будет добавить (команда switchport trunk allowed vlan add 10,20)
-	del - значит VLANы надо удалить из списка разрешенных (команда switchport trunk allowed vlan remove 17)
-	only - значит, что на интерфейсе должны остаться разрешенными только указанные VLANы (команда switchport trunk allowed vlan 11,30)
+	add - VLANы надо будет добавить (команда switchport trunk allowed vlan add 10,20)
+	del - VLANы надо удалить из списка разрешенных (команда switchport trunk allowed vlan remove 17)
+	only - на интерфейсе должны остаться разрешенными только указанные VLANы (команда switchport trunk allowed vlan 11,30)
 
 Задача для портов 0/1, 0/2, 0/4:
 - сгенерировать конфигурацию на основе шаблона trunk_template
 - с учетом ключевых слов add, del, only
+
+Код не должен привязываться к конкретным номерам портов. То есть, если в словаре
+trunk будут другие номера интерфейсов, код должен работать.
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 '''
@@ -33,21 +36,19 @@ trunk_template = [
     'switchport trunk allowed vlan'
 ]
 
-fast_int = {
-    'access': {
-        '0/12': '10',
-        '0/14': '11',
-        '0/16': '17',
-        '0/17': '150'
-    },
-    'trunk': {
+access = {
+    '0/12': '10',
+    '0/14': '11',
+    '0/16': '17',
+    '0/17': '150'
+}
+trunk = {
         '0/1': ['add', '10', '20'],
         '0/2': ['only', '11', '30'],
         '0/4': ['del', '17']
     }
-}
 
-for intf, vlan in fast_int['access'].items():
+for intf, vlan in access.items():
     print('interface FastEthernet' + intf)
     for command in access_template:
         if command.endswith('access vlan'):
